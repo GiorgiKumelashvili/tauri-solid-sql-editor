@@ -45,6 +45,15 @@ import { highlightSelectionMatches, searchKeymap } from '@codemirror/search';
 
 import { sql } from '@codemirror/lang-sql';
 
+//! IMPORTANT
+//TODO create custom ui desktop like library in pure css for pure perfomance or tailwind core
+//TODO folder for core components and ui compononents for desktop ui
+
+//TODO clone rust sql client and make into into submmodule also decipher (its just missing mssql, mongo, redis)
+//TODO decipher codemirror plugin core and solid js as well might as well clone solid-codemirror
+
+//TODO create codemirror organization and add all submodule
+
 const extensions: Extension = [
   EditorView.theme({}),
   oneDark,

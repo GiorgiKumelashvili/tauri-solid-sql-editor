@@ -7,11 +7,16 @@ export default defineConfig({
   build: {
     target: 'esnext',
   },
-  server:{
-    host:true
+  server: {
+    host: true,
   },
   optimizeDeps: {
-    // Add both @codemirror/state and @codemirror/view to included deps to optimize
-    include: ['@codemirror/state', '@codemirror/view'],
-  }
+    include: [
+      '@codemirror/state',
+      '@codemirror/view',
+      '@codemirror/commands',
+      '@codemirror/language',
+    ],
+  },
 });
+

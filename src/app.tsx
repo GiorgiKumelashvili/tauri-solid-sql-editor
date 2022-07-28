@@ -1,9 +1,11 @@
 import { invoke } from '@tauri-apps/api/tauri';
-import { createCodeMirror, createEditorControlledValue } from 'solid-codemirror';
-import { Component, createSignal, onMount } from 'solid-js';
+import { createCodeMirror } from 'solid-codemirror';
+import { Component, createEffect, createSignal, on, onMount } from 'solid-js';
 // import { lineNumbers } from '@codemirror/view';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { EditorView, minimalSetup } from 'codemirror';
+
+import Codemirror from 'codemirror';
 
 import {
   lineNumbers,
@@ -26,24 +28,64 @@ import {
   defaultHighlightStyle,
   bracketMatching,
   foldKeymap,
+  language,
 } from '@codemirror/language';
+import { BaseDirectory, readTextFile } from '@tauri-apps/api/fs';
+
+import { EditorState, Extension } from '@codemirror/state';
+
+import {
+  closeBrackets,
+  autocompletion,
+  closeBracketsKeymap,
+  completionKeymap,
+} from '@codemirror/autocomplete';
+
+import { highlightSelectionMatches, searchKeymap } from '@codemirror/search';
+
+import { sql } from '@codemirror/lang-sql';
+
+const extensions: Extension = [
+  EditorView.theme({}),
+  oneDark,
+  lineNumbers(),
+  highlightActiveLineGutter(),
+  highlightSpecialChars(),
+  foldGutter(),
+  indentOnInput(),
+  bracketMatching(),
+  closeBrackets(),
+  autocompletion(),
+
+  dropCursor(),
+  EditorState.allowMultipleSelections.of(true),
+
+  rectangularSelection(),
+  crosshairCursor(),
+  highlightActiveLine(),
+  highlightSelectionMatches(),
+
+  sql(),
+
+  keymap.of([
+    ...closeBracketsKeymap,
+    ...defaultKeymap,
+    ...searchKeymap,
+    ...historyKeymap,
+    ...foldKeymap,
+    ...completionKeymap,
+  ]),
+  syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
+];
 
 const App: Component = () => {
-  let editorEl!: HTMLDivElement;
-
-  const { ref: editorRef, createExtension, editorView } = createCodeMirror();
-  const theme = EditorView.theme({
-    '1': {
-      background: 'red',
-    },
+  const { ref: editorRef, createExtension, editorView } = createCodeMirror({
+    value: '...',
   });
 
-  createExtension(theme);
-  createExtension(oneDark);
-  createExtension(lineNumbers);
-  createEditorControlledValue(editorView, () => '');
-  createExtension(EditorView.lineWrapping);
-  createExtension(keymap.of([...defaultKeymap]));
+  onMount(() => {
+    createExtension(extensions);
+  });
 
   async function handleClick(event) {
     // Invoke the command from our backend using the invoke function
@@ -55,53 +97,26 @@ const App: Component = () => {
     alert(result);
   }
 
-  async function handleClick2() {
-    await invoke('my_custom_command');
+  async function showFile() {
+    const content = await readTextFile('/Users/giorgi/Documents/test.js');
+
+    const newState = EditorState.create({
+      doc: content,
+      extensions,
+    });
+
+    editorView().setState(newState);
   }
-
-  //   const minimalSetup = /*@__PURE__*/(() => [
-  //     highlightSpecialChars(),
-  //     history(),
-  //     drawSelection(),
-  //     syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
-  //     keymap.of([
-  //         ...defaultKeymap,
-  //         ...historyKeymap,
-  //     ])
-  // ])();
-
-  // onMount(() => {
-  //   let view = new EditorView({
-  //     doc: '...',
-  //     parent: document.getElementById('test'),
-  //     extensions: [
-  //       // highlightSpecialChars(),
-  //       // history(),
-  //       // drawSelection(),
-  //       // syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
-  //       keymap.of([...defaultKeymap]),
-  //     ],
-  //     // extensions:[drawSelection(),highlightSpecialChars()]
-  //   });
-
-  //   //  let view = new EditorView({
-  //   //   doc:'...',
-  //   //   parent: document.getElementById('test'),
-  //   //   extensions:minimalSetup
-  //   // });
-  // });
 
   return (
     <>
       <div>
         <button onClick={handleClick}>Click Me</button>
         <br />
-        <button style={{ border: '1px solid black' }} onClick={handleClick2}>
-          Click Me 2
-        </button>
+        <button onClick={showFile}>Read file content</button>
+        <br />
 
         <div ref={editorRef} />
-        {/* <div id="test"></div> */}
       </div>
     </>
   );

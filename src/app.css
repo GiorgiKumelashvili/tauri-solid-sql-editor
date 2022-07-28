@@ -1,9 +1,24 @@
 .CodeMirror-wrap pre {
-    word-break: break-word;
-    height: 300px;
+  word-break: break-word;
+  height: 300px;
 }
 
-.CodeMirror {
-  height: 300px;
+.cm-editor {
+  overflow-y: auto;
+  height: 500px;
+}
+
+/* custom-scrollbar */
+.cm-scroller::-webkit-scrollbar {
+  width: 9px;
+}
+
+.cm-scroller::-webkit-scrollbar-thumb {
+  background-color: rgba(114, 114, 114, 0.7);
+  border-radius: 0px;
+}
+
+.cm-scroller::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(114, 114, 114, 1);
 }
 

@@ -503,6 +503,17 @@
     "@codemirror/view" "^6.0.0"
     "@lezer/common" "^1.0.0"
 
+"@codemirror/lang-sql@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@codemirror/lang-sql/-/lang-sql-6.0.0.tgz#e0a75e8c9181f6f032a8bb7c06930da74800bcc9"
+  integrity sha512-mq4NwTDbbo7QZktfgPsS+ms0FmAceH4WM2jLbgf+N28FoKUy0JzGe3XJymgnTewXnNUwujKBxArQzibxSDdVyQ==
+  dependencies:
+    "@codemirror/autocomplete" "^6.0.0"
+    "@codemirror/language" "^6.0.0"
+    "@codemirror/state" "^6.0.0"
+    "@lezer/highlight" "^1.0.0"
+    "@lezer/lr" "^1.0.0"
+
 "@codemirror/language@^6.0.0":
   version "6.2.1"
   resolved "https://registry.yarnpkg.com/@codemirror/language/-/language-6.2.1.tgz#cb10cd785a76e50ecd2fe2dc59ff66af8a41b87a"

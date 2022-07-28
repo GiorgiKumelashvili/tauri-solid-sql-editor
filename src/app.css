@@ -1,0 +1,9 @@
+.CodeMirror-wrap pre {
+    word-break: break-word;
+    height: 300px;
+}
+
+.CodeMirror {
+  height: 300px;
+}
+

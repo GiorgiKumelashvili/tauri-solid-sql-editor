@@ -71,7 +71,7 @@
         "height": 600,
         "resizable": true,
         "title": "Solid",
-        "decorations": true,
+        "decorations": false,
         "width": 800
       }
     ]

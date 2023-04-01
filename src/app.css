@@ -1,3 +1,35 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #21252b;
+  margin: 100px;
+  overflow: overlay;
+}
+
+* {
+  font-size: 15px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+  color: #abb2bf;
+}
+
+.btn {
+  user-select: none;
+  border: none;
+  border: 1px solid #464c55;
+  padding: 7px 16px;
+  border-radius: 1px;
+  outline: none;
+  background-color: #3d424b;
+  color: #abb2bf;
+}
+
+/* code mirror */
+
 .CodeMirror-wrap pre {
   word-break: break-word;
   height: 300px;
@@ -8,7 +40,6 @@
   height: 500px;
 }
 
-/* custom-scrollbar */
 .cm-scroller::-webkit-scrollbar {
   width: 9px;
 }
@@ -21,4 +52,3 @@
 .cm-scroller::-webkit-scrollbar-thumb:hover {
   background-color: rgba(114, 114, 114, 1);
 }
-
